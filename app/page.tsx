@@ -119,8 +119,6 @@ export default function HomePage() {
             )}
           </div>
 
-          {/* Sidebar */}
-          <Sidebar />
         </div>
       </div>
     </div>
