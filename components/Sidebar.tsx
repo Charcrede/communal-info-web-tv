@@ -8,7 +8,7 @@ import { formatDate, getFileTypeByUrl } from '@/lib/utils';
 
 interface SidebarProps {
   currentCategory?: string;
-  toExclude: number;
+  toExclude: string;
 }
 
 export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
@@ -19,9 +19,9 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
 
   const fetchArticles = async () => {
     let respArts: Article[] = [];
-    const response = await axios.get(`${apiUrl}/articles/?exclude_rubric=${toExclude}`).then((resp) => {
-      respArts = resp?.data?.results
-      if (resp?.data?.pages === 1 || resp?.data?.current === 1) {
+    const response = await axios.get(`${apiUrl}/articles/?exclude_rubric=${toExclude}&per_page=4`).then((resp) => {
+      respArts = resp?.data?.data
+      if (resp?.data?.pages === 1 || resp?.data?.current_page === 1) {
         setRelatedArticles(respArts);
       }
     });
@@ -83,20 +83,20 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
               <div className="flex gap-3">
                 {article.media && (() => {
                   const firstMedia = article.media[0];
-                  const ext = getFileTypeByUrl(firstMedia);
+                  const ext = firstMedia.type;
 
                   return firstMedia ? (
                     <div className="flex-shrink-0">
                       {ext == "video" ? (
                         <video
-                          src={`${imgUrl}/${firstMedia}`}
+                          src={`${imgUrl}${firstMedia.url}`}
                           className="w-16 h-16 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                           muted
                           loop
                         />
                       ) : (
                         <img
-                          src={`${imgUrl}/${firstMedia}`}
+                          src={`${imgUrl}${firstMedia.url}`}
                           alt={article.title}
                           className="w-16 h-16 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                         />

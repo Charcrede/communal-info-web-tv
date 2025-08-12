@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Clock, Loader2 } from "lucide-react";
+import { ArrowDown, Clock, Loader2 } from "lucide-react";
 import { Article } from "@/types/article";
 import ArticleCard from "@/components/ArticleCard";
 import Sidebar from "@/components/Sidebar";
@@ -19,11 +19,12 @@ export default function ConseillerPage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts: Article[] = [];
-    const response = await axios.get(`${apiUrl}/articles/?rubric=3`).then((resp) => {
+    const response = await axios.get(`${apiUrl}/articles/?rubric=conseiller`).then((resp) => {
       setLoading(false)
-      respArts = resp?.data?.results
+      respArts = resp?.data?.data
       if (resp?.data?.pages === 1 || resp?.data?.current === 1) {
         setArticles(respArts);
+        setHasMore(resp?.data?.current_page < resp?.data?.last_page);
       } else {
         setArticles(prev => [...prev, ...respArts]);
       }
@@ -38,12 +39,6 @@ export default function ConseillerPage() {
     setPage(nextPage);
     await fetchArticles(nextPage);
   };
-
-  const { isFetching } = useInfiniteScroll({
-    fetchMore,
-    hasMore,
-    threshold: 100
-  });
 
   useEffect(() => {
     fetchArticles();
@@ -93,26 +88,33 @@ export default function ConseillerPage() {
                     onToggleContent={() => toggleArticleExpansion(article.id)}
                   />
                 ))}
-                
-                {(isFetching || loading) && articles.length > 0 && (
+
+                {(loading) && articles.length > 0 && (
                   <div className="flex justify-center py-8">
                     <Loader2 className="w-6 h-6 animate-spin text-[#074020] dark:text-[#4ade80]" />
                   </div>
                 )}
-                
-                {!hasMore && articles.length > 0 && (
+
+                {!hasMore && articles.length > 0 ? (
                   <div className="text-center py-8">
                     <div className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
                       <Clock className="w-4 h-4" />
                       <span>Vous avez vu tous les articles</span>
                     </div>
                   </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <button onClick={() => { fetchMore() }} className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
+                      <ArrowDown className="w-4 h-4" />
+                      <span>Voir plus d'articles</span>
+                    </button>
+                  </div>
                 )}
               </div>
             )}
           </div>
 
-          <Sidebar currentCategory="conseiller" toExclude={3}/>
+          <Sidebar currentCategory="conseiller" toExclude={'conseiller'} />
         </div>
       </div>
     </div>

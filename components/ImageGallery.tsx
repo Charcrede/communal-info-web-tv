@@ -5,7 +5,7 @@ import { MediaItem } from '@/types/article';
 import { getFileTypeByUrl } from '@/lib/utils';
 
 interface ImageGalleryProps {
-  images: string[];
+  images: MediaItem[];
   isOpen: boolean;
   onClose: () => void;
   initialIndex?: number;
@@ -91,19 +91,19 @@ export default function ImageGallery({ images, isOpen, onClose, initialIndex = 0
 
       {/* Main Content */}
       <div className="flex items-center justify-center h-full p-4 pt-16 pb-24">
-        {getFileTypeByUrl(currentMedia) === 'video' ? (
+        {currentMedia.type === 'video' ? (
           <video
             controls
             className="max-w-full max-h-full object-contain"
             autoPlay
           >
-            <source src={`${imgUrl}/${currentMedia}`} type="video/mp4" />
+            <source src={`${imgUrl}${currentMedia.url}`} type="video/mp4" />
             Votre navigateur ne supporte pas la lecture de vidéos.
           </video>
         ) : (
           <img
-            src={`${imgUrl}/${currentMedia}`}
-            alt={currentMedia.split(".")[0] || `Image ${currentIndex + 1}`}
+            src={`${imgUrl}${currentMedia.url}`}
+            alt={currentMedia.url.split(".")[0] || `Image ${currentIndex + 1}`}
             className="max-w-full max-h-full object-contain"
           />
         )}
@@ -115,24 +115,24 @@ export default function ImageGallery({ images, isOpen, onClose, initialIndex = 0
           <div className="flex justify-center gap-2 overflow-x-auto max-w-full">
             {images.map((media, index) => (
               <button
-                key={media.split(".")[0]}
+                key={media.url.split(".")[0]}
                 onClick={() => goToImage(index)}
                 className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${index === currentIndex
                     ? 'border-white scale-110'
                     : 'border-transparent hover:border-gray-400'
                   }`}
               >
-                {getFileTypeByUrl(media) === 'video' ? (
+                {media.type === 'video' ? (
                   <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                     <video
-                          src={`${imgUrl}/${media}`}
+                          src={`${imgUrl}${media.url}`}
                           className="w-full h-full object-cover"
                           muted
                         />
                   </div>
                 ) : (
                   <img
-                    src={`${imgUrl}/${media}`}
+                    src={`${imgUrl}${media.url}`}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

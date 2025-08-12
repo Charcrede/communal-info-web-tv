@@ -50,8 +50,8 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
     setSelectedImageIndex(imageIndex);
     setGalleryOpen(true);
   };
-  const mainImage = article.media[0];
-  console.log(`${imgUrl}/${mainImage}`)
+  const mainImage = article.media.length > 0 ? article.media[0] : null;
+
   const hasMultipleImages = article.media.length > 1;
 
   return (
@@ -65,15 +65,15 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                 className="relative cursor-pointer"
                 onClick={() => openGallery(0)}
               >
-                {getFileTypeByUrl(mainImage) === 'image' ? (
+                {mainImage.type === 'image' ? (
                   <img
-                    src={`${imgUrl}/${mainImage}`}
+                    src={`${imgUrl}${mainImage.url}`}
                     alt={article.title}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                ) : getFileTypeByUrl(mainImage) === 'video' ? (
+                ) : mainImage.type === 'video' ? (
                   <video
-                    src={`${imgUrl}/${mainImage}`}
+                    src={`${imgUrl}${mainImage.url}`}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                     muted
                     loop
@@ -95,19 +95,19 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                 <div className="absolute bottom-4 left-4 flex gap-2">
                   {article.media.slice(1, 4).map((media, idx) => (
                     <button
-                      key={media.split(".")[0]}
+                      key={media.url.split(".")[0]}
                       onClick={() => openGallery(idx + 1)}
                       className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white/80 hover:border-white transition-all hover:scale-110"
                     >
-                      {getFileTypeByUrl(media) === 'image' ? (
+                      {media.type === 'image' ? (
                         <img
-                          src={`${imgUrl}/${media}`}
+                          src={`${imgUrl}${media.url}`}
                           alt={`Preview ${idx + 2}`}
                           className="w-full h-full object-cover"
                         />
-                      ) : getFileTypeByUrl(media) === 'video' ? (
+                      ) : media.type === 'video' ? (
                         <video
-                          src={`${imgUrl}/${media}`}
+                          src={`${imgUrl}${media.url}`}
                           className="w-full h-full object-cover"
                           muted
                           autoPlay
@@ -137,7 +137,7 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
               <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
                 <User className="w-4 h-4" />
                 <span className="font-medium">
-                  {article?.user?.firstname} {article?.user?.lastname}
+                  {article?.creator?.name}
                 </span>
               </div>
               <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">

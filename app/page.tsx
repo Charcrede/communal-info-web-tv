@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Clock, Loader2 } from "lucide-react";
+import { ArrowBigDown, ArrowDown, Clock, Loader2 } from "lucide-react";
 import { Article } from "@/types/article";
 import ArticleCard from "@/components/ArticleCard";
 import Sidebar from "@/components/Sidebar";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import axios from "axios";
 import { getToken } from "@/lib/utils";
+import { log } from "console";
 
 export default function HomePage() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -20,19 +21,18 @@ export default function HomePage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts : Article[] = [];
+    let res:any;
     const response = await axios.get(`${apiUrl}/articles/`).then((resp)=>{
       setLoading(false)
-      respArts = resp?.data?.result
+      respArts = resp?.data?.data
+      setHasMore(resp?.data?.current_page < resp?.data?.last_page);
     });
-
+    
     if (pageNum === 1) {
       setArticles(respArts);
     } else {
       setArticles(prev => [...prev, ...respArts]);
     }
-
-
-    setHasMore(pageNum < 3); // Simulate having 3 pages max
     setLoading(false);
   };
 
@@ -42,14 +42,10 @@ export default function HomePage() {
     await fetchArticles(nextPage);
   };
 
-  const { isFetching } = useInfiniteScroll({
-    fetchMore,
-    hasMore,
-    threshold: 100
-  });
 
   useEffect(() => {
     fetchArticles();
+    
   }, []);
 
   const toggleArticleExpansion = (articleId: number) => {
@@ -100,19 +96,26 @@ export default function HomePage() {
                 ))}
 
                 {/* Loading indicator for infinite scroll */}
-                {(isFetching || loading) && articles.length > 0 && (
+                {(loading) && articles.length > 0 && (
                   <div className="flex justify-center py-8">
                     <Loader2 className="w-6 h-6 animate-spin text-[#074020] dark:text-[#4ade80]" />
                   </div>
                 )}
 
                 {/* End of articles message */}
-                {!hasMore && articles.length > 0 && (
+                {!hasMore && articles.length > 0 ? (
                   <div className="text-center py-8">
                     <div className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
                       <Clock className="w-4 h-4" />
                       <span>Vous avez vu tous les articles</span>
                     </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <button onClick={()=>{fetchMore()}} className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
+                      <ArrowDown className="w-4 h-4" />
+                      <span>Voir plus d'articles</span>
+                    </button>
                   </div>
                 )}
               </div>
