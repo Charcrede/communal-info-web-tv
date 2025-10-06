@@ -24,7 +24,8 @@ export default function HomePage() {
     let res:any;
     const response = await axios.get(`${apiUrl}/articles/`).then((resp)=>{
       setLoading(false)
-      respArts = resp?.data?.data
+      respArts = resp?.data?.data.data
+      console.log(resp.data)
       setHasMore(resp?.data?.current_page < resp?.data?.last_page);
     });
     

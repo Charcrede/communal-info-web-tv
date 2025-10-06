@@ -19,7 +19,7 @@ export default function ConseillerPage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts: Article[] = [];
-    const response = await axios.get(`${apiUrl}/articles/?rubric=conseiller`).then((resp) => {
+    const response = await axios.get(`${apiUrl}/articles/?rubric=la-voix-du-conseiller-local`).then((resp) => {
       setLoading(false)
       respArts = resp?.data?.data
       if (resp?.data?.pages === 1 || resp?.data?.current === 1) {
