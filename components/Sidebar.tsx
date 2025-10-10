@@ -20,10 +20,8 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
   const fetchArticles = async () => {
     let respArts: Article[] = [];
     const response = await axios.get(`${apiUrl}/articles/?exclude_rubric=${toExclude}&per_page=4`).then((resp) => {
-      respArts = resp?.data?.data
-      if (resp?.data?.pages === 1 || resp?.data?.current_page === 1) {
-        setRelatedArticles(respArts);
-      }
+      respArts = resp?.data?.data?.data
+      setRelatedArticles(respArts);
     });
 
   };
@@ -31,8 +29,8 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
   useEffect(() => {
     const mockCategories: Rubric[] = [
       { id: 1, name: "La Voix du Maire", slug: "la-voix-du-maire", description: "Actualités du maire" },
-      { id: 2, name: "Conseil Communal", slug: "conseil", description: "Décisions du conseil" },
-      { id: 3, name: "Conseiller Local", slug: "conseiller", description: "Initiatives locales" },
+      { id: 2, name: "Conseil Communal", slug: "la-voix-du-conseil", description: "Décisions du conseil" },
+      { id: 3, name: "Conseiller Local", slug: "la-voix-du-conseiller-local", description: "Initiatives locales" },
       { id: 4, name: "Publi-Reportage", slug: "publi-reportage", description: "Reportages spéciaux" },
     ];
 
@@ -89,14 +87,14 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
                     <div className="flex-shrink-0">
                       {ext == "video" ? (
                         <video
-                          src={`${imgUrl}${firstMedia.url}`}
+                          src={`${firstMedia.url}`}
                           className="w-16 h-16 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                           muted
                           loop
                         />
                       ) : (
                         <img
-                          src={`${imgUrl}${firstMedia.url}`}
+                          src={`${firstMedia.url}`}
                           alt={article.title}
                           className="w-16 h-16 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                         />

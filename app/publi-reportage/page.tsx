@@ -19,7 +19,7 @@ export default function PubliReportagePage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts: Article[] = [];
-    const response = await axios.get(`${apiUrl}/articles/?rubric=publi`).then((resp) => {
+    const response = await axios.get(`${apiUrl}/articles/?rubric=publi-reportage`).then((resp) => {
       setLoading(false)
       respArts = resp?.data?.data.data
       if (resp?.data?.data?.pages === 1 || resp?.data?.data?.current === 1) {
@@ -115,7 +115,7 @@ export default function PubliReportagePage() {
             )}
           </div>
 
-          <Sidebar currentCategory="publi-reportage" toExclude={'publi'} />
+          <Sidebar currentCategory="publi-reportage" toExclude={'publi-reportage'} />
         </div>
       </div>
     </div>

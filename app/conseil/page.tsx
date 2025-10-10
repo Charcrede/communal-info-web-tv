@@ -19,7 +19,7 @@ export default function ConseilPage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts: Article[] = []; 
-    const response = await axios.get(`${apiUrl}/articles/?rubric=conseil`).then((resp) => {
+    const response = await axios.get(`${apiUrl}/articles/?rubric=la-voix-du-conseil-communal`).then((resp) => {
       setLoading(false)
       respArts = resp?.data?.data.data
       if (resp?.data?.data?.pages === 1 || resp?.data?.data?.current === 1) {
@@ -114,7 +114,7 @@ export default function ConseilPage() {
             )}
           </div>
 
-          <Sidebar currentCategory="conseil" toExclude={'conseil'}/>
+          <Sidebar currentCategory="conseil" toExclude={'la-voix-du-conseil'}/>
         </div>
       </div>
     </div>

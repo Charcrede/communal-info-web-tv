@@ -114,7 +114,7 @@ export default function ConseillerPage() {
             )}
           </div>
 
-          <Sidebar currentCategory="conseiller" toExclude={'conseiller'} />
+          <Sidebar currentCategory="conseiller" toExclude={'la-voix-du-conseiller-local'} />
         </div>
       </div>
     </div>

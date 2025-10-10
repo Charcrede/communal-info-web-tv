@@ -19,7 +19,7 @@ export default function LaVoixDuMairePage() {
   const fetchArticles = async (pageNum: number = 1) => {
     setLoading(true);
     let respArts: Article[] = [];
-    const response = await axios.get(`${apiUrl}/articles/?rubric=maire`).then((resp) => {
+    const response = await axios.get(`${apiUrl}/articles/?rubric=la-voix-du-maire`).then((resp) => {
       setLoading(false)
       console.log(resp?.data?.data)
       respArts = resp?.data?.data.data
@@ -116,7 +116,7 @@ export default function LaVoixDuMairePage() {
             )}
           </div>
 
-          <Sidebar currentCategory="la-voix-du-maire" toExclude={'maire'}/>
+          <Sidebar currentCategory="la-voix-du-maire" toExclude={'la-voix-du-maire'}/>
         </div>
       </div>
     </div>
