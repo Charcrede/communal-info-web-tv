@@ -67,13 +67,13 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
               >
                 {mainImage.type === 'image' ? (
                   <img
-                    src={`${imgUrl}${mainImage.url}`}
+                    src={`${mainImage.url}`}
                     alt={article.title}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 ) : mainImage.type === 'video' ? (
                   <video
-                    src={`${imgUrl}${mainImage.url}`}
+                    src={`${mainImage.url}`}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                     muted
                     loop
@@ -101,13 +101,13 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                     >
                       {media.type === 'image' ? (
                         <img
-                          src={`${imgUrl}${media.url}`}
+                          src={`${media.url}`}
                           alt={`Preview ${idx + 2}`}
                           className="w-full h-full object-cover"
                         />
                       ) : media.type === 'video' ? (
                         <video
-                          src={`${imgUrl}${media.url}`}
+                          src={`${media.url}`}
                           className="w-full h-full object-cover"
                           muted
                           autoPlay

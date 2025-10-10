@@ -125,14 +125,14 @@ export default function ImageGallery({ images, isOpen, onClose, initialIndex = 0
                 {media.type === 'video' ? (
                   <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                     <video
-                          src={`${imgUrl}${media.url}`}
+                          src={`${media.url}`}
                           className="w-full h-full object-cover"
                           muted
                         />
                   </div>
                 ) : (
                   <img
-                    src={`${imgUrl}${media.url}`}
+                    src={`${media.url}`}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

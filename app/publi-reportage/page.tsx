@@ -21,10 +21,10 @@ export default function PubliReportagePage() {
     let respArts: Article[] = [];
     const response = await axios.get(`${apiUrl}/articles/?rubric=publi`).then((resp) => {
       setLoading(false)
-      respArts = resp?.data?.data
-      if (resp?.data?.pages === 1 || resp?.data?.current === 1) {
+      respArts = resp?.data?.data.data
+      if (resp?.data?.data?.pages === 1 || resp?.data?.data?.current === 1) {
         setArticles(respArts);
-        setHasMore(resp?.data?.current_page < resp?.data?.last_page);
+        setHasMore(resp?.data?.data?.current_page < resp?.data?.data?.last_page);
       } else {
         setArticles(prev => [...prev, ...respArts]);
       }
