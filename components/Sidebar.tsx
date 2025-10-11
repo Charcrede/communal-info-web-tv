@@ -40,36 +40,7 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
 
   return (
     <aside className="lg:w-80 w-full space-y-8">
-      {/* Categories */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-          <Tag className="w-5 h-5 text-[#074020] dark:text-[#4ade80]" />
-          Rubriques
-        </h3>
-        <div className="space-y-3">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/${category.slug}`}
-              className={`block p-3 rounded-xl transition-all duration-300 group ${currentCategory === category.slug
-                  ? 'bg-gradient-to-r from-[#074020] to-[#074020]/80 text-white shadow-lg'
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
-                }`}
-            >
-              <div className="font-semibold text-sm uppercase tracking-wide">
-                {category.name}
-              </div>
-              {category.description && (
-                <div className="text-xs opacity-80 mt-1">
-                  {category.description}
-                </div>
-              )}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Related Articles */}
+            {/* Related Articles */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-[#940806] dark:text-[#ff6b6b]" />
@@ -120,9 +91,39 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
           ))}
         </div>
       </div>
+      {/* Categories */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+          <Tag className="w-5 h-5 text-[#074020] dark:text-[#4ade80]" />
+          Rubriques
+        </h3>
+        <div className="space-y-3">
+          {categories.map((category) => (
+            <Link
+              key={category.id}
+              href={`/${category.slug}`}
+              className={`block p-3 rounded-xl transition-all duration-300 group ${currentCategory === category.slug
+                  ? 'bg-gradient-to-r from-[#074020] to-[#074020]/80 text-white shadow-lg'
+                  : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                }`}
+            >
+              <div className="font-semibold text-sm uppercase tracking-wide">
+                {category.name}
+              </div>
+              {category.description && (
+                <div className="text-xs opacity-80 mt-1">
+                  {category.description}
+                </div>
+              )}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+
 
       {/* Newsletter Signup */}
-      <div className="bg-gradient-to-br from-[#074020] to-[#940806] rounded-2xl shadow-lg p-6 text-white">
+      {/* <div className="bg-gradient-to-br from-[#074020] to-[#940806] rounded-2xl shadow-lg p-6 text-white">
         <h3 className="text-xl font-bold mb-4">Restez informé</h3>
         <p className="text-sm opacity-90 mb-4">
           Recevez les dernières actualités de votre commune directement dans votre boîte mail.
@@ -137,7 +138,7 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
             S'abonner
           </button>
         </div>
-      </div>
+      </div> */}
     </aside>
   );
 }
