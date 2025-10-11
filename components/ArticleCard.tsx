@@ -47,6 +47,7 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
   };
 
   const openGallery = (imageIndex: number = 0) => {
+    console.log(mainImage?.url)
     setSelectedImageIndex(imageIndex);
     setGalleryOpen(true);
   };
@@ -76,7 +77,7 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                     src={`${mainImage.url}`}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                     muted
-                    loop
+                    autoPlay
                   />
                 ) : null}
 
@@ -107,6 +108,7 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                         />
                       ) : media.type === 'video' ? (
                         <video
+                        onClick={()=>{console.log(mainImage.url)}}
                           src={`${media.url}`}
                           className="w-full h-full object-cover"
                           muted

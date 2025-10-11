@@ -88,7 +88,7 @@ export default function HomePage() {
               <div className="space-y-8">
                 {articles.map((article, index) => (
                   <ArticleCard
-                    key={article.id}
+                    key={`${article.id}-${index}`}
                     article={article}
                     index={index}
                     showFullContent={expandedArticles.has(article.id)}

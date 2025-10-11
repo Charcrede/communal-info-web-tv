@@ -97,12 +97,12 @@ export default function ImageGallery({ images, isOpen, onClose, initialIndex = 0
             className="max-w-full max-h-full object-contain"
             autoPlay
           >
-            <source src={`${imgUrl}${currentMedia.url}`} type="video/mp4" />
+            <source src={`${currentMedia.url}`} type="video/mp4" />
             Votre navigateur ne supporte pas la lecture de vidéos.
           </video>
         ) : (
           <img
-            src={`${imgUrl}${currentMedia.url}`}
+            src={`${currentMedia.url}`}
             alt={currentMedia.url.split(".")[0] || `Image ${currentIndex + 1}`}
             className="max-w-full max-h-full object-contain"
           />

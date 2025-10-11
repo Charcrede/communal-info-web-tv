@@ -76,8 +76,8 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
           Autres actualités
         </h3>
         <div className="space-y-4">
-          {relatedArticles.map((article) => (
-            <div key={article.id} className="group cursor-pointer">
+          {relatedArticles.map((article, index) => (
+            <div key={`${article.id}-${index}`} className="group cursor-pointer">
               <div className="flex gap-3">
                 {article.media && (() => {
                   const firstMedia = article.media[0];
