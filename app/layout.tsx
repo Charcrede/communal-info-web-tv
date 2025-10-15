@@ -172,7 +172,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           <div className="max-w-7xl mx-auto px-6 text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <img src="logo.png" alt="logo" />
+                <img src="/logo.png" alt="logo" />
               </div>
               <span className="text-xl font-bold">COMMUNAL INFO WEB TV</span>
             </div>

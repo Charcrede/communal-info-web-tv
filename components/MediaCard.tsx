@@ -135,9 +135,7 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
 
                         {/* Bouton pour partager sur Facebook */}
                         <a
-                            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                window.location.href
-                            )}`}
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${media.youtubeUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline bg-gray-100 rounded-full p-1"
@@ -145,9 +143,7 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
                             <SocialIcon name="facebook" fill="#555" />
                         </a>
                         <a
-                            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                                window.location.origin + "/more/" + media.id
-                            )}&text=${encodeURIComponent(media.description)}`}
+                            href={`https://twitter.com/intent/tweet?url=${media.youtubeUrl}&text=${encodeURIComponent(media.description)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline bg-gray-100 rounded-full p-1"
@@ -156,7 +152,7 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
                         </a>
                         <a
                             href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                                media.description + " " + window.location.origin + "/more/" + media.id
+                                media.description + "`\n " + media.youtubeUrl
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"

@@ -5,6 +5,7 @@ import { Article } from '@/types/article';
 import ImageGallery from './ImageGallery';
 import { getFileTypeByUrl } from '@/lib/utils';
 import SocialIcon from './SocialIcons';
+import SharerButtons from './SharerButtons';
 
 interface ArticleCardProps {
   article: Article;
@@ -155,48 +156,8 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
             </div>
           )}
 
-          <div className="flex gap-2 mt-2">
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                window.location.href
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#555] px-2 hover:underline text-[14px] flex items-center gap-2 bg-gray-100 rounded-full p-1"
-            >
-              Partager <SocialIcon name="share" fill='#555'/>
-            </a>
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                window.location.href
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline bg-gray-100 rounded-full p-1"
-            >
-              <SocialIcon name="facebook" fill='#555'/>
-            </a>
-            <a
-              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                window.location.origin + "/more/" + article.id
-              )}&text=${encodeURIComponent(article.title)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-400 hover:underline bg-gray-100 rounded-full p-1"
-            >
-              <SocialIcon name="twitter" fill='#555'/>
-            </a>
-            <a
-              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                article.title + " " + window.location.origin + "/more/" + article.id
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className=" hover:underline bg-gray-100 rounded-full p-1"
-            >
-              <SocialIcon name="whatsapp" fill='#555'/>
-            </a>
-          </div>
+          <SharerButtons article={article} />
+
 
           {/* Content */}
           <div className="py-4">
