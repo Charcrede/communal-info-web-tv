@@ -68,7 +68,7 @@ export default function HomePage() {
         <div className="text-center mb-12">
           <div className="inline-block">
             <h1 className="lg:text-5xl text-3xl font-bold text-[#074020] dark:text-[#4ade80] mb-4 tracking-wide">
-              ACTUALITÉS COMMUNALES
+              ACTUALITÉS COMMUNALES, POLITIQUES, SPORTIVES ET AUTRES
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-[#074020] to-[#940806] mx-auto rounded-full"></div>
           </div>
