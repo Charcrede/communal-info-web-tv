@@ -17,6 +17,15 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
     const [galleryOpen, setGalleryOpen] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // le feedback disparaît après 2s
+    };
+
+
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const now = new Date();
@@ -109,24 +118,22 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
                                     ></iframe>
                                 ) : null}
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-
                             </div>
 
                         </div>
                     )}
 
                     <div className="flex gap-2 my-4">
-                        <a
-                            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                window.location.href
-                            )}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#555] px-2 hover:underline text-[14px] flex items-center gap-2 bg-gray-100 rounded-full p-1"
+                        {/* Bouton pour copier le lien */}
+                        <button
+                            onClick={handleCopy}
+                            className="text-[#555] px-2 text-[14px] flex items-center gap-2 bg-gray-100 rounded-full p-1"
                         >
-                            Partager <SocialIcon name="share" fill='#555' />
-                        </a>
+                            {copied ? "Lien copié" : "Copier le lien"}{" "}
+                            <SocialIcon name="share" fill="#555" />
+                        </button>
+
+                        {/* Bouton pour partager sur Facebook */}
                         <a
                             href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                                 window.location.href
@@ -135,12 +142,12 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline bg-gray-100 rounded-full p-1"
                         >
-                            <SocialIcon name="facebook" fill='#555' />
+                            <SocialIcon name="facebook" fill="#555" />
                         </a>
                         <a
                             href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
                                 window.location.origin + "/more/" + media.id
-                            )}&text=${encodeURIComponent(media.title)}`}
+                            )}&text=${encodeURIComponent(media.description)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-400 hover:underline bg-gray-100 rounded-full p-1"
@@ -149,7 +156,7 @@ export default function MediaCard({ media, index, showFullContent, onToggleConte
                         </a>
                         <a
                             href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                                media.title + " " + window.location.origin + "/more/" + media.id
+                                media.description + " " + window.location.origin + "/more/" + media.id
                             )}`}
                             target="_blank"
                             rel="noopener noreferrer"
