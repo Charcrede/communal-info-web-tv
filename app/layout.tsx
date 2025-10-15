@@ -6,12 +6,19 @@ import { Menu, X } from "lucide-react";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import ThemeToggle from "@/components/ThemeToggle";
 import "./globals.css";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//   title: 'Communal Admin - Système d\'administration',
+//   description: 'Interface d\'administration pour la gestion de contenu communal',
+// };
 
 const navItems = [
   { name: "La Voix du Maire", path: "/la-voix-du-maire" },
   { name: "La Voix du Conseil Communal", path: "/conseil" },
   { name: "La Voix du Conseiller Local", path: "/conseiller" },
-  { name: "Publi-Reportage", path: "/publi-reportage" }
+  { name: "Publi-Reportage", path: "/publi-reportage" },
+  { name: "Médias", path: "/medias" }
 ];
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
@@ -26,6 +33,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
 
   const handleLinkClick = () => {
     setMenuOpen(false);
@@ -39,7 +47,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
             ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-2xl py-3' 
             : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-lg py-4'
         }`}>
-          <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="max-w-9xl mx-auto px-6 flex justify-between items-center">
             
             <Link 
               className="hover:scale-105 transition-all duration-300 flex items-center gap-3 group" 

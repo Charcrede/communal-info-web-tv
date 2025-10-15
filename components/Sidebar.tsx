@@ -41,14 +41,14 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
   return (
     <aside className="lg:w-80 w-full space-y-8">
             {/* Related Articles */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700" >
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-[#940806] dark:text-[#ff6b6b]" />
           Autres actualités
         </h3>
         <div className="space-y-4">
           {relatedArticles.map((article, index) => (
-            <div key={`${article.id}-${index}`} className="group cursor-pointer">
+            <Link href={`/${article.title}`} key={`${article.id}-${index}`} className="block group cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded-xl transition-all duration-300">
               <div className="flex gap-3">
                 {article.media && (() => {
                   const firstMedia = article.media[0];
@@ -87,7 +87,7 @@ export default function Sidebar({ currentCategory, toExclude }: SidebarProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

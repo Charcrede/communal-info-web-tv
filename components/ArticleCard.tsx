@@ -4,6 +4,7 @@ import { Clock, User, Eye, EyeOff, Calendar, Play, Image as ImageIcon } from 'lu
 import { Article } from '@/types/article';
 import ImageGallery from './ImageGallery';
 import { getFileTypeByUrl } from '@/lib/utils';
+import SocialIcon from './SocialIcons';
 
 interface ArticleCardProps {
   article: Article;
@@ -58,7 +59,29 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
   return (
     <>
       <article className="group">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600">
+        <div className="px-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-gray-200 dark:hover:border-gray-600">
+          {/* Title */}
+          <h2 className="lg:text-3xl text-2xl m-4 font-bold text-[#074020] dark:text-[#ff6b6b] mb-6 leading-tight group-hover:text-[#940806] dark:group-hover:text-[#4ade80] transition-colors duration-300">
+            {article?.title}
+          </h2>
+          {/* Meta information */}
+          <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
+              <User className="w-4 h-4" />
+              <span className="font-medium">
+                {article?.creator?.name}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
+              <Calendar className="w-4 h-4" />
+              <span>{formatDate(article.created_at)}</span>
+            </div>
+            {article.rubric && (
+              <div className="flex items-center gap-2 bg-[#074020]/10 dark:bg-[#074020]/20 text-[#074020] dark:text-[#074020] px-3 py-1 rounded-full">
+                <span className="font-medium">{article.rubric.name}</span>
+              </div>
+            )}
+          </div>
           {/* Image header */}
           {mainImage && (
             <div className="relative overflow-hidden w-full h-64">
@@ -108,7 +131,7 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
                         />
                       ) : media.type === 'video' ? (
                         <video
-                        onClick={()=>{console.log(mainImage.url)}}
+                          onClick={() => { console.log(mainImage.url) }}
                           src={`${media.url}`}
                           className="w-full h-full object-cover"
                           muted
@@ -132,37 +155,60 @@ export default function ArticleCard({ article, index, showFullContent, onToggleC
             </div>
           )}
 
-          {/* Content */}
-          <div className="p-8">
-            {/* Meta information */}
-            <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
-              <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
-                <User className="w-4 h-4" />
-                <span className="font-medium">
-                  {article?.creator?.name}
-                </span>
-              </div>
-              <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 px-3 py-1 rounded-full">
-                <Calendar className="w-4 h-4" />
-                <span>{formatDate(article.created_at)}</span>
-              </div>
-              {article.rubric && (
-                <div className="flex items-center gap-2 bg-[#074020]/10 dark:bg-[#074020]/20 text-[#074020] dark:text-[#074020] px-3 py-1 rounded-full">
-                  <span className="font-medium">{article.rubric.name}</span>
-                </div>
-              )}
-            </div>
+          <div className="flex gap-2 mt-2">
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                window.location.href
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#555] px-2 hover:underline text-[14px] flex items-center gap-2 bg-gray-100 rounded-full p-1"
+            >
+              Partager <SocialIcon name="share" fill='#555'/>
+            </a>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                window.location.href
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline bg-gray-100 rounded-full p-1"
+            >
+              <SocialIcon name="facebook" fill='#555'/>
+            </a>
+            <a
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                window.location.origin + "/more/" + article.id
+              )}&text=${encodeURIComponent(article.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline bg-gray-100 rounded-full p-1"
+            >
+              <SocialIcon name="twitter" fill='#555'/>
+            </a>
+            <a
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                article.title + " " + window.location.origin + "/more/" + article.id
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" hover:underline bg-gray-100 rounded-full p-1"
+            >
+              <SocialIcon name="whatsapp" fill='#555'/>
+            </a>
+          </div>
 
-            {/* Title */}
-            <h2 className="lg:text-3xl text-xl font-bold text-[#940806] dark:text-[#ff6b6b] mb-6 leading-tight group-hover:text-[#074020] dark:group-hover:text-[#4ade80] transition-colors duration-300">
-              {article?.title}
-            </h2>
+          {/* Content */}
+          <div className="py-4">
 
             {/* Content */}
+            <div className='mb-4'>
+              <p className='italic font-semibold text-gray-600'>{article.head}</p>
+            </div>
             <div className="relative">
-              <p className={`text-gray-700 dark:text-gray-300 leading-relaxed text-lg transition-all duration-500 ${showFullContent
-                  ? 'max-h-none'
-                  : 'max-h-24 overflow-hidden'
+              <p className={`text-gray-700 no-select no-copy dark:text-gray-300 leading-relaxed text-lg transition-all duration-500 ${showFullContent
+                ? 'max-h-none'
+                : 'max-h-24 overflow-hidden'
                 }`}>
                 {article.content}
               </p>

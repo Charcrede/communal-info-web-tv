@@ -5,12 +5,19 @@ export interface User {
   email?: string;
 }
 
-  export interface MediaItem {
-    id: number;
-    url: string;
-    type: 'image' | 'video';
-    alt?: string;
-  }
+export interface Media {
+  id: string;
+  title: string;
+  description: string;
+  type: 'image' | 'video' | 'audio';
+  url: string;
+  youtubeUrl?: string;
+  filename: string;
+  size: number;
+  creator:ArticleCreator;
+  created_at: string;
+  updated_at: string;
+}
 
 export interface Rubric {
   id: number;
@@ -30,9 +37,10 @@ export interface Article {
   creator: ArticleCreator;
   created_at: string;
   updated_at: string;
+  head: string;
   user: User;
   rubric: Rubric;
-  media: MediaItem[]; // URL de l'image principale
+  media: Media[]; // URL de l'image principale
   tags?: string[];
   views?: number;
 }

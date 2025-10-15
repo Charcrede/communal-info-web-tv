@@ -1,0 +1,123 @@
+"use client";
+import { useEffect, useState } from "react";
+import { ArrowDown, Clock, Loader2 } from "lucide-react";
+import { Media } from "@/types/article";
+import Sidebar from "@/components/Sidebar";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import axios from "axios";
+import MediaCard from "@/components/MediaCard";
+
+export default function MediaPage() {
+  const [Medias, setMedias] = useState<Media[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API;
+  const [page, setPage] = useState(1);
+  const [expandedMedias, setExpandedMedias] = useState<Set<string>>(new Set());
+
+
+  const fetchMedias = async (pageNum: number = 1) => {
+    setLoading(true);
+    let respArts: Media[] = [];
+    const response = await axios.get(`${apiUrl}/medias/unlinked`).then((resp) => {
+      setLoading(false)
+      respArts = resp?.data?.data.data
+      if (resp?.data?.data?.pages === 1 || resp?.data?.data?.current === 1) {
+        setMedias(respArts);
+        setHasMore(resp?.data?.data?.current_page < resp?.data?.data?.last_page);
+      } else {
+        setMedias(prev => [...prev, ...respArts]);
+      }
+    });
+    setLoading(false);
+  };
+
+  const fetchMore = async () => {
+    if (hasMore) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      await fetchMedias(nextPage);
+    }
+
+  };
+
+  useEffect(() => {
+    fetchMedias();
+  }, []);
+
+  const toggleMediaExpansion = (mediaId: string) => {
+    setExpandedMedias(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(mediaId)) {
+        newSet.delete(mediaId);
+      } else {
+        newSet.add(mediaId);
+      }
+      return newSet;
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <div className="inline-block">
+            <h1 className="lg:text-5xl text-3xl font-bold text-[#074020] dark:text-[#4ade80] mb-4 tracking-wide">
+              INFO MEDIAS
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#074020] to-[#940806] mx-auto rounded-full"></div>
+          </div>
+          <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg">
+            Portraits d'entreprises et initiatives locales
+          </p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1">
+            {loading && Medias.length === 0 ? (
+              <div className="flex justify-center items-center py-20">
+                <Loader2 className="w-8 h-8 animate-spin text-[#074020] dark:text-[#4ade80]" />
+              </div>
+            ) : (
+              <div className="space-y-8">
+                {Medias.map((media, index) => (
+                  <MediaCard
+                    key={`${media.id}-${index}`}
+                    media={media}
+                    index={index}
+                    showFullContent={expandedMedias.has(media.id)}
+                    onToggleContent={() => toggleMediaExpansion(media.id)}
+                  />
+                ))}
+
+                {(loading) && Medias.length > 0 && (
+                  <div className="flex justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin text-[#074020] dark:text-[#4ade80]" />
+                  </div>
+                )}
+
+                {!hasMore && Medias.length > 0 ? (
+                  <div className="text-center py-8">
+                    <div className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
+                      <Clock className="w-4 h-4" />
+                      <span>Vous avez vu tous les Medias</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <button onClick={()=>{fetchMore()}} className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm">
+                      <ArrowDown className="w-4 h-4" />
+                      <span>Voir plus d'Medias</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <Sidebar currentCategory="publi-reportage" toExclude={'publi-reportage'} />
+        </div>
+      </div>
+    </div>
+  );
+}

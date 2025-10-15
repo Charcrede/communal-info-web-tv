@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { MediaItem } from '@/types/article';
+import { Media } from '@/types/article';
 import { getFileTypeByUrl } from '@/lib/utils';
 
 interface ImageGalleryProps {
-  images: MediaItem[];
+  images: Media[];
   isOpen: boolean;
   onClose: () => void;
   initialIndex?: number;
