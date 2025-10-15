@@ -55,7 +55,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
             >
               <div className="relative">
                 <div className="w-14 h-14 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300  bg-white flex items-center justify-center">
-                  <img src="logo.png" alt="logo" />
+                  <img src="/logo.png" alt="logo" />
                 </div>
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-[#074020]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
